@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SkyrimNX_ModManager.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SkyrimNXDirectory" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">atmosphere/contents/01000A10041EA000/romfs/Data</Value>
+    </Setting>
+    <Setting Name="CreationClubContentFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">skyrim.ccc</Value>
+    </Setting>
+    <Setting Name="ModsDirectory" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D:/Mods</Value>
+    </Setting>
+    <Setting Name="ConvertedModsDirectory" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D:/ConvertedMods</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
