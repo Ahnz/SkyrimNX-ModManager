@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using SkyrimNX_ModManager.Models;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SkyrimNX_ModManager
 {
@@ -12,48 +8,23 @@ namespace SkyrimNX_ModManager
     {
         static void Main(string[] args)
         {
+            // TODO: Initializing and checking Paths 
+
             DirectoryInfo[] modList = new DirectoryInfo(Properties.Settings.Default.ModsDirectory).GetDirectories("*", SearchOption.TopDirectoryOnly);
 
             foreach (DirectoryInfo mod in modList)
             {
-                Console.WriteLine(mod.Name);
-                ConvertMod(mod);
+                string lastOutputDirectory;
+                Mod currentMod = new Mod(mod.Name, mod.FullName);
+                Console.WriteLine(currentMod.Name);
+                lastOutputDirectory = currentMod.Transform(Operation.Convert, currentMod.Path);
+                lastOutputDirectory = currentMod.Transform(Operation.Unpack, lastOutputDirectory);
+                lastOutputDirectory = currentMod.Transform(Operation.Merge, lastOutputDirectory);
+                Directory.Move(lastOutputDirectory, $"{Properties.Settings.Default.ConvertedModsDirectory}/{currentMod.Name}");
+                currentMod.CleanUpDirectory();
             }
+
             Console.ReadLine();
-        }
-        static void ConvertMod(DirectoryInfo mod)
-        {
-            string modName = mod.Name;
-            string modPath = mod.FullName;
-            string modCompletePath = $"{Properties.Settings.Default.ConvertedModsDirectory}/{modName}";
-            DirectoryInfo modUnpackedPath = new DirectoryInfo($@"{Properties.Settings.Default.ModsDirectory}/{modName}_Unpacked");
-
-            Directory.CreateDirectory(modCompletePath);
-            RunTask(@"Toolkit\UNPACK_MOD.BAT", $"\"{modPath}\""); //Unpack
-            // TODO: Convert
-            RunTask(@"Toolkit\Utilities\bsarch.exe", $"pack \"{modUnpackedPath.FullName}\" \"{modCompletePath}/{modName}.bsa\" -sse -af 0x00000003 -ff 0x00000000"); //Merge BSA
-
-            // Combine
-            FileInfo[] modFiles = modUnpackedPath.GetFiles("*.*", SearchOption.TopDirectoryOnly);
-            foreach (FileInfo file in modFiles)
-            {
-                file.MoveTo($@"{modCompletePath}/{file.Name}");
-            }
-            modUnpackedPath.Delete(true);
-        }
-
-        static void RunTask(string process, string args)
-        {
-            Process processChild;
-            ProcessStartInfo taskInfo;
-
-            taskInfo = new ProcessStartInfo(process, args);
-
-            taskInfo.CreateNoWindow = true;
-            taskInfo.UseShellExecute = false;
-
-            processChild = Process.Start(taskInfo);
-            processChild.WaitForExit();
         }
     }
 }
