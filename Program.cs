@@ -19,19 +19,20 @@ namespace SkyrimNX_ModManager
 
         static void PrepareLocalMods()
         {
+            ModConverter converter = new ModConverter();
             DirectoryInfo[] baseModList = new DirectoryInfo(Settings.Default.ModsDirectory).GetDirectories("*", SearchOption.TopDirectoryOnly);
 
             // Prepare Mods
-            foreach (DirectoryInfo mod in baseModList)
+            foreach (DirectoryInfo modFile in baseModList)
             {
-                string lastOutputDirectory;
-                Mod currentMod = new Mod(mod.Name, mod.FullName);
-                Console.WriteLine(currentMod.Name);
-                lastOutputDirectory = currentMod.Transform(Operation.Convert, currentMod.Path);
-                lastOutputDirectory = currentMod.Transform(Operation.Unpack, lastOutputDirectory);
-                lastOutputDirectory = currentMod.Transform(Operation.Merge, lastOutputDirectory);
-                Directory.Move(lastOutputDirectory, $"{Properties.Settings.Default.ConvertedModsDirectory}/{currentMod.Name}");
-                currentMod.CleanUpDirectory();
+                Console.WriteLine(modFile.Name);
+
+                Mod currentMod = new Mod(modFile.Name, modFile.FullName);
+                currentMod.Path = converter.Transform(Operation.Convert, currentMod);
+                currentMod.Path = converter.Transform(Operation.Unpack, currentMod);
+                currentMod.Path = converter.Transform(Operation.Merge, currentMod);
+                Directory.Move(currentMod.Path, $"{Settings.Default.ConvertedModsDirectory}/{currentMod.Name}");
+                converter.CleanUpDirectory();
             }
         }
 

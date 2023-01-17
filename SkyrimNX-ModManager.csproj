@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Controllers\FileTransfer.cs" />
     <Compile Include="Controllers\LoadOrder.cs" />
+    <Compile Include="Controllers\ModConverter.cs" />
     <Compile Include="Models\Mod.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
