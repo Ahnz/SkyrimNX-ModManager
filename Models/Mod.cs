@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkyrimNX_ModManager.Properties;
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -81,7 +82,7 @@ namespace SkyrimNX_ModManager.Models
                 Directory.Delete(PathMerged, true);
             }
 
-            string[] logFiles = Directory.GetFiles(Properties.Settings.Default.ModsDirectory, "*.log", SearchOption.TopDirectoryOnly);
+            string[] logFiles = Directory.GetFiles(Settings.Default.ModsDirectory, "*.log", SearchOption.TopDirectoryOnly);
             foreach (string logFile in logFiles)
             {
                 File.Delete(logFile);
