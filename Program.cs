@@ -40,7 +40,6 @@ namespace SkyrimNX_ModManager
         {
             Mod[] baseModList = converter.ReturnModList(Settings.Default.ModsDirectory);
 
-            // Prepare Mods
             foreach (Mod currentMod in baseModList)
             {
                 Console.WriteLine("Converting " + currentMod.Name);
@@ -55,9 +54,13 @@ namespace SkyrimNX_ModManager
         static void UploadMods()
         {            
             Mod[] convertedModList = converter.ReturnModList(Settings.Default.ConvertedModsDirectory);
-
             FileTransfer filetransfer = new FileTransfer(true);
-            filetransfer.Upload(convertedModList);           
+
+            foreach (Mod m in convertedModList)
+            {
+                filetransfer.Upload(m);
+            }
+                         
         }
     }
 }

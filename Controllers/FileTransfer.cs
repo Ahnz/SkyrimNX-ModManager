@@ -10,30 +10,29 @@ namespace SkyrimNX_ModManager.Controllers
     {
         private FtpClient client;
         private bool delAfterUpload;
-        public FileTransfer(bool delAfterUpload = false)
+        private bool enableModAfterUpload;
+        public FileTransfer(bool delAfterUpload = false, bool enableModAfterUpload = true)
         {
             client = new FtpClient(Settings.Default.SwitchIp, Settings.Default.SwitchUser, Settings.Default.SwitchPassword, Settings.Default.SwitchPort);
             this.delAfterUpload = delAfterUpload;
+            this.enableModAfterUpload = enableModAfterUpload;
         }
 
-        public void Upload(Mod[] mList)
+        public void Upload(Mod m)
         {
             client.AutoConnect();
-            foreach(Mod m in mList)
+            Console.WriteLine(m.Name);
+            foreach (FileInfo mContent in m.Contents())
             {
-                Console.WriteLine(m.Name);
-                foreach (FileInfo mContent in m.Contents())
+                string remotePath = Settings.Default.SkyrimNXDirectory + "/" + mContent.Name;
+                if (!client.FileExists(remotePath))
                 {
-                    string remotePath = Settings.Default.SkyrimNXDirectory + "/" + mContent.Name;
-                    if (!client.FileExists(remotePath))
-                    {
-                        client.UploadFile(mContent.FullName, remotePath);
-                    }
+                    client.UploadFile(mContent.FullName, remotePath);
                 }
-                if(delAfterUpload)
-                {
-                    Directory.Delete(m.Path, true);
-                }
+            }
+            if (delAfterUpload)
+            {
+                Directory.Delete(m.Path, true);
             }
             client.Disconnect();
         }
