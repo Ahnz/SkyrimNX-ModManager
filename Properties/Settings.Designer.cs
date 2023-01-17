@@ -25,15 +25,6 @@ namespace SkyrimNX_ModManager.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("atmosphere/contents/01000A10041EA000/romfs/Data")]
-        public string SkyrimNXDirectory {
-            get {
-                return ((string)(this["SkyrimNXDirectory"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("skyrim.ccc")]
         public string CreationClubContentFile {
             get {
@@ -56,6 +47,51 @@ namespace SkyrimNX_ModManager.Properties {
         public string ConvertedModsDirectory {
             get {
                 return ((string)(this["ConvertedModsDirectory"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.178.49")]
+        public string SwitchIp {
+            get {
+                return ((string)(this["SwitchIp"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("root")]
+        public string SwitchUser {
+            get {
+                return ((string)(this["SwitchUser"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("alpine")]
+        public string SwitchPassword {
+            get {
+                return ((string)(this["SwitchPassword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5000")]
+        public int SwitchPort {
+            get {
+                return ((int)(this["SwitchPort"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/atmosphere/contents/01000A10041EA000/romfs/Data")]
+        public string SkyrimNXDirectory {
+            get {
+                return ((string)(this["SkyrimNXDirectory"]));
             }
         }
     }

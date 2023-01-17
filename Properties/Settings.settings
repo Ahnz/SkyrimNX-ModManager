@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SkyrimNX_ModManager.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="SkyrimNXDirectory" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">atmosphere/contents/01000A10041EA000/romfs/Data</Value>
-    </Setting>
     <Setting Name="CreationClubContentFile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">skyrim.ccc</Value>
     </Setting>
@@ -13,6 +10,21 @@
     </Setting>
     <Setting Name="ConvertedModsDirectory" Type="System.String" Scope="Application">
       <Value Profile="(Default)">D:/ConvertedMods</Value>
+    </Setting>
+    <Setting Name="SwitchIp" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">192.168.178.49</Value>
+    </Setting>
+    <Setting Name="SwitchUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">root</Value>
+    </Setting>
+    <Setting Name="SwitchPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">alpine</Value>
+    </Setting>
+    <Setting Name="SwitchPort" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
+    <Setting Name="SkyrimNXDirectory" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/atmosphere/contents/01000A10041EA000/romfs/Data</Value>
     </Setting>
   </Settings>
 </SettingsFile>
