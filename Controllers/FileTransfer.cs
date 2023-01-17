@@ -1,4 +1,5 @@
 ﻿using FluentFTP;
+using SkyrimNX_ModManager.Models;
 using SkyrimNX_ModManager.Properties;
 using System;
 using System.IO;
@@ -8,25 +9,30 @@ namespace SkyrimNX_ModManager.Controllers
     public class FileTransfer
     {
         private FtpClient client;
-        public FileTransfer()
+        private bool delAfterUpload;
+        public FileTransfer(bool delAfterUpload = false)
         {
             client = new FtpClient(Settings.Default.SwitchIp, Settings.Default.SwitchUser, Settings.Default.SwitchPassword, Settings.Default.SwitchPort);
+            this.delAfterUpload = delAfterUpload;
         }
 
-        public void Upload(string[] modList)
+        public void Upload(Mod[] mList)
         {
             client.AutoConnect();
-            foreach(string modPath in modList)
+            foreach(Mod m in mList)
             {
-                FileInfo[] modFiles = new DirectoryInfo(modPath).GetFiles();
-                foreach (FileInfo mod in modFiles)
+                Console.WriteLine(m.Name);
+                foreach (FileInfo mContent in m.Contents())
                 {
-                    Console.WriteLine(mod.Name);
-                    string remotePath = Settings.Default.SkyrimNXDirectory + "/" + mod.Name;
+                    string remotePath = Settings.Default.SkyrimNXDirectory + "/" + mContent.Name;
                     if (!client.FileExists(remotePath))
                     {
-                        client.UploadFile(mod.FullName, remotePath);
+                        client.UploadFile(mContent.FullName, remotePath);
                     }
+                }
+                if(delAfterUpload)
+                {
+                    Directory.Delete(m.Path, true);
                 }
             }
             client.Disconnect();

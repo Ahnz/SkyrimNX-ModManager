@@ -30,13 +30,22 @@ namespace SkyrimNX_ModManager.Controllers
                     RunTask($@"Toolkit\{operation}_MOD.BAT", $"\"{mod.Path}\"");
                     break;
 
-                case Operation.Merge:           
-                    MergeFiles(dest, mod); 
+                case Operation.Merge:
+                    MergeFiles(dest, mod);
                     break;
             }
             return dest;
         }
-
+        public Mod[] ReturnModList(string dirPath)
+        {
+            DirectoryInfo[] dirs = new DirectoryInfo(dirPath).GetDirectories("*", SearchOption.TopDirectoryOnly);
+            Mod[] mList = new Mod[dirs.Length];
+            for (int i = 0; i < dirs.Length; i++)
+            {
+                mList[i] = new Mod(dirs[i].Name, dirs[i].FullName);
+            }
+            return mList;
+        }
         public void CleanUpDirectory()
         {
             string src = Settings.Default.ModsDirectory;
@@ -55,7 +64,6 @@ namespace SkyrimNX_ModManager.Controllers
                 File.Delete(logFile);
             }
         }
-
         private void MergeFiles(string dest, Mod mod)
         {
             bool containsEsp = false;

@@ -8,6 +8,7 @@ namespace SkyrimNX_ModManager
 {
     class Program
     {
+        static ModConverter converter = new ModConverter();
         static void Main(string[] args)
         {
             // TODO: Initializing and checking Paths
@@ -19,15 +20,13 @@ namespace SkyrimNX_ModManager
 
         static void PrepareLocalMods()
         {
-            ModConverter converter = new ModConverter();
-            DirectoryInfo[] baseModList = new DirectoryInfo(Settings.Default.ModsDirectory).GetDirectories("*", SearchOption.TopDirectoryOnly);
+            Mod[] baseModList = converter.ReturnModList(Settings.Default.ModsDirectory);
 
             // Prepare Mods
-            foreach (DirectoryInfo modFile in baseModList)
+            foreach (Mod currentMod in baseModList)
             {
-                Console.WriteLine(modFile.Name);
+                Console.WriteLine(currentMod.Name);
 
-                Mod currentMod = new Mod(modFile.Name, modFile.FullName);
                 currentMod.Path = converter.Transform(Operation.Convert, currentMod);
                 currentMod.Path = converter.Transform(Operation.Unpack, currentMod);
                 currentMod.Path = converter.Transform(Operation.Merge, currentMod);
@@ -35,12 +34,11 @@ namespace SkyrimNX_ModManager
                 converter.CleanUpDirectory();
             }
         }
-
         static void UploadMods()
         {            
-            string[] convertedModList = Directory.GetDirectories(Settings.Default.ConvertedModsDirectory, "*", SearchOption.TopDirectoryOnly);
+            Mod[] convertedModList = converter.ReturnModList(Settings.Default.ConvertedModsDirectory);
 
-            FileTransfer filetransfer = new FileTransfer();
+            FileTransfer filetransfer = new FileTransfer(true);
             filetransfer.Upload(convertedModList);           
         }
     }
