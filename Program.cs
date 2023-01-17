@@ -12,10 +12,28 @@ namespace SkyrimNX_ModManager
         static void Main(string[] args)
         {
             // TODO: Initializing and checking Paths
-            PrepareLocalMods();
-            UploadMods();
-            //Sort LoadOrder 
-            Console.ReadLine();
+
+            int choice;
+            Console.WriteLine("Please select an Option:");
+            Console.WriteLine("(1) Convert Mods");
+            Console.WriteLine("(2) Upload Mods");
+            Console.WriteLine("(3) Change Load Order");
+            Console.Write("\nEnter choice: ");
+            Int32.TryParse(Console.ReadLine(), out choice);
+            Console.Clear();
+
+            switch (choice)
+            {
+                case 1:
+                    PrepareLocalMods();
+                    break;
+                case 2:
+
+                    UploadMods();
+                    break;
+                default:
+                    break;
+            }
         }
 
         static void PrepareLocalMods()
@@ -25,7 +43,7 @@ namespace SkyrimNX_ModManager
             // Prepare Mods
             foreach (Mod currentMod in baseModList)
             {
-                Console.WriteLine(currentMod.Name);
+                Console.WriteLine("Converting " + currentMod.Name);
 
                 currentMod.Path = converter.Transform(Operation.Convert, currentMod);
                 currentMod.Path = converter.Transform(Operation.Unpack, currentMod);

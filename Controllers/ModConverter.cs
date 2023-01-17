@@ -17,7 +17,6 @@ namespace SkyrimNX_ModManager.Controllers
         private string[] prefixList = { "_ConvertedAndPacked", "_Unpacked", "_Merged" };
         public string Transform(Operation operation, Mod mod)
         {
-            Console.WriteLine(operation);
             string dest = mod.Path + prefixList[Convert.ToInt32(operation)]; // default underlying type for an enum is int
 
             switch (operation)
